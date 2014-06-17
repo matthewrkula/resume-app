@@ -25,7 +25,7 @@ public class HackathonProject {
     public String description;
     public ArrayList<String> awards;
     public String youtubeUrl;
-    public String githubUrl
+    public String githubUrl;
     public int imageId;
 
     public static ArrayList<HackathonProject> getProjects(){

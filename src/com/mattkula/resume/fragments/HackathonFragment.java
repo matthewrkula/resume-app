@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.mattkula.resume.NotifyingHorizontalScrollView;
 import com.mattkula.resume.R;
 import com.mattkula.resume.models.HackathonProject;
 
@@ -93,9 +94,21 @@ public class HackathonFragment extends ListFragment {
                 github.setVisibility(View.GONE);
             }
 
+            final ImageView img = (ImageView)v.findViewById(R.id.iv_hackathon);
             if (project.imageId > 0) {
-                ((ImageView) v.findViewById(R.id.iv_hackathon)).setImageDrawable(getResources().getDrawable(project.imageId));
+                img.setImageDrawable(getResources().getDrawable(project.imageId));
             }
+
+            NotifyingHorizontalScrollView scrollView = (NotifyingHorizontalScrollView)v.findViewById(R.id.scrollview);
+            scrollView.setOnScrollListener(new NotifyingHorizontalScrollView.OnScrollListener() {
+                @Override
+                public void onScroll(int l, int t, int oldl, int oldt) {
+                    int x = Math.min(Math.max(l, 0), 200);
+                    img.setScaleX(1 + x / 500.0f);
+                    img.setScaleY(1 + x / 500.0f);
+                    img.setTranslationX(-x * 0.4f);
+                }
+            });
 
             v.findViewById(R.id.colorizer).setBackgroundColor(getResources().getColor(colors[i % colors.length]));
             v.findViewById(R.id.colorizer2).setBackgroundColor(getResources().getColor(colors[i % colors.length]));
